@@ -12,7 +12,7 @@ class Bootstrap_model extends CI_Model
          */
         // Returns the results as an array
         if ($count) {
-            return $this->db->get('country')->num_rows();
+            return $this->db->count_all_results('country');
         } else {
             $this->db->limit($limit, $from);
             return $this->db->get('country')->result_array();
