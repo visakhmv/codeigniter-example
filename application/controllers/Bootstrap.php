@@ -8,12 +8,13 @@ class Bootstrap extends CI_Controller
     {
         parent::__construct();
         $this->load->database();
-        $this->load->model(['visakh_model','bootstrap_model']);
+        $this->load->model(['visakh_model', 'bootstrap_model']);
         $this->load->helper('url');
-        $this->load->library('session');
+        $this->load->library(['session', 'pagination']);
     }
 
-    public function index(){
+    public function index()
+    {
         //Views inside a common folder
         $this->load->view('bootstrap/header');
         $this->load->view('bootstrap/left-menu');
@@ -47,9 +48,9 @@ class Bootstrap extends CI_Controller
             $row = array(
                 'name' => $this->input->post('name'),
                 'email' => $this->input->post('email'),
-                'phone' => $this->input->post('phone')
+                'phone' => $this->input->post('phone'),
             );
-            $this->visakh_model->updateMyTable($id,$row);    
+            $this->visakh_model->updateMyTable($id, $row);
             //Setting message as flash data
             $this->session->set_flashdata('msg', 'Updated Successfully!');
             //Redirecting to display page
@@ -63,7 +64,7 @@ class Bootstrap extends CI_Controller
     }
 
     public function delete($id = null)
-    {        
+    {
         $this->visakh_model->deleteFromMyTable($id);
         //Setting message as flash data
         $this->session->set_flashdata('msg', 'Deleted Successfully!');
@@ -76,20 +77,21 @@ class Bootstrap extends CI_Controller
     {
         $this->data['search'] = $this->input->get('search');
         $this->data['rows'] = $this->visakh_model->getAllRows($this->data['search']);
-        $this->data['msg']= $this->session->flashdata('msg');
+        $this->data['msg'] = $this->session->flashdata('msg');
         $this->load->view('bootstrap/header');
         $this->load->view('bootstrap/left-menu');
         $this->load->view('bootstrap/display', $this->data);
         $this->load->view('bootstrap/footer');
     }
 
-    public function login(){
-        if(count($_POST)>0){
+    public function login()
+    {
+        if (count($_POST) > 0) {
             //Sending username from post to check in the table
             $row = $this->visakh_model->checkLogin($this->input->post('username'));
 
             //If there is a response and the passwords equals then valid login
-            if(!empty($row) && $row['password']==$this->input->post('password')){
+            if (!empty($row) && $row['password'] == $this->input->post('password')) {
                 //Set session values
                 $this->session->set_userdata('id', $row['id']);
                 $this->session->set_userdata('name', $row['name']);
@@ -98,33 +100,49 @@ class Bootstrap extends CI_Controller
                 //Set flash data to display login messsage
                 $this->session->set_flashdata('login_msg', 'Login Success!');
                 redirect(base_url('bootstrap/home'));
-            }else{
+            } else {
                 echo '<h3>Incorrect login</h3>';
             }
         }
         $this->load->view('bootstrap/login');
     }
 
-    public function logout(){
+    public function logout()
+    {
         session_destroy();
         redirect(base_url('bootstrap/display'));
     }
-    
+
     public function home()
     {
         $this->data['search'] = $this->input->get('search');
         $this->data['rows'] = $this->visakh_model->getAllRows($this->data['search']);
-        $this->data['msg']= $this->session->flashdata('msg');
+        $this->data['msg'] = $this->session->flashdata('msg');
         $this->load->view('bootstrap/header');
         $this->load->view('bootstrap/left-menu');
         $this->load->view('bootstrap/display', $this->data);
         $this->load->view('bootstrap/footer');
     }
 
-    public function country(){
+    public function country($page = null)
+    {
         $this->data['search'] = $this->input->get('search');
-        $this->data['rows'] = $this->visakh_model->getAllRows($this->data['search']);
-        $this->data['msg']= $this->session->flashdata('msg');
+
+        $config['base_url'] = base_url('bootstrap/country/');
+        $config['total_rows'] = $this->visakh_model->getAllCountries($this->data['search'], true);
+        $config['per_page'] = 30;
+        //Bootstrap styling
+        $config['num_tag_open'] = '<li class="page-item">';
+        $config['num_tag_close'] = '</li>';
+        $config['attributes'] = array('class' => 'page-link');
+        $config['cur_tag_open'] = '<li class="page-item active"><a class="page-link">';
+        $config['cur_tag_close'] = '</a></li>';
+        //end
+        $this->pagination->initialize($config);
+        $this->data['pagination'] = $this->pagination->create_links();
+
+        $this->data['rows'] = $this->visakh_model->getAllCountries($this->data['search'], false, $page, $config['per_page']);
+        $this->data['msg'] = $this->session->flashdata('msg');
         $this->load->view('bootstrap/header');
         $this->load->view('bootstrap/left-menu');
         $this->load->view('bootstrap/country', $this->data);
