@@ -129,7 +129,7 @@ class Bootstrap extends CI_Controller
         $this->data['search'] = $this->input->get('search');
 
         $config['base_url'] = base_url('bootstrap/country/');
-        $config['total_rows'] = $this->visakh_model->getAllCountries($this->data['search'], true);
+        $config['total_rows'] = $this->bootstrap_model->getAllCountries($this->data['search'], true);
         $config['per_page'] = 30;
         //Bootstrap styling
         $config['num_tag_open'] = '<li class="page-item">';
@@ -141,11 +141,15 @@ class Bootstrap extends CI_Controller
         $this->pagination->initialize($config);
         $this->data['pagination'] = $this->pagination->create_links();
 
-        $this->data['rows'] = $this->visakh_model->getAllCountries($this->data['search'], false, $page, $config['per_page']);
+        $this->data['rows'] = $this->bootstrap_model->getAllCountries($this->data['search'], false, $page, $config['per_page']);
         $this->data['msg'] = $this->session->flashdata('msg');
         $this->load->view('bootstrap/header');
         $this->load->view('bootstrap/left-menu');
         $this->load->view('bootstrap/country', $this->data);
         $this->load->view('bootstrap/footer');
+    }
+
+    function county_search_ajax(){
+        echo json_encode($this->bootstrap_model->searchCounty($this->input->get('term')));
     }
 }

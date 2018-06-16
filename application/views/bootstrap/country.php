@@ -12,7 +12,7 @@
     <nav class="navbar navbar-light bg-light">
         <span class="navbar-brand">Country</span>
         <form class="form-inline float-right">
-            <input name="search" class="form-control mr-sm-2" type="search" placeholder="Search" value="<?= $search ?>">
+            <input name="search" id="search" class="form-control mr-sm-2" type="search" placeholder="Search" value="<?= $search ?>">
             <button class="btn btn-outline-success" type="submit">Search</button>
         </form>
     </nav>
@@ -52,3 +52,12 @@
         </div>
     </div>
 </div>
+<link rel="stylesheet" href="<?= base_url('assets/css/jquery-ui.css') ?>">
+<script src="<?= base_url('assets/js/jquery-ui.js') ?>"></script>
+<script>
+  $( function() {
+    $( "#search" ).autocomplete({
+      source: "<?= base_url('bootstrap/county_search_ajax') ?>"
+    });
+  } );
+  </script>
