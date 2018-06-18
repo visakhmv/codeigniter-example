@@ -5,30 +5,30 @@
         </nav>
         <div class="row">
             <div class="col-sm-2">
-                <ul class="nav flex-column">
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('bootstrap/register') ?>">Register</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('bootstrap/display') ?>">Display</a>
-                    </li>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('bootstrap/country') ?>">Country</a>
-                    </li>
+                <div class="list-group list-group-flush">
+                    <a href="<?= base_url('bootstrap/register') ?>" class="list-group-item list-group-item-action">
+                        Register
+                    </a>
+                    <a href="<?= base_url('bootstrap/display') ?>" class="list-group-item list-group-item-action">
+                        Display
+                    </a>
+                    <a href="<?= base_url('bootstrap/country') ?>" class="list-group-item list-group-item-action">
+                        Country
+                    </a>
                     <?php
                     if($this->session->userdata('id')):
                     ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('bootstrap/logout') ?>">Logout (<?= $this->session->userdata('name') ?>)</a>
-                    </li>
+                    <a href="<?= base_url('bootstrap/logout') ?>" class="list-group-item list-group-item-action">
+                        Logout (<?= $this->session->userdata('name') ?>)
+                    </a>
                     <?php
                     else:
                     ?>
-                    <li class="nav-item">
-                        <a class="nav-link" href="<?= base_url('bootstrap/login') ?>">Login</a>
-                    </li>
+                    <a href="<?= base_url('bootstrap/login') ?>" class="list-group-item list-group-item-action">
+                        Login
+                    </a>
                     <?php
                     endif
                     ?>
-                </ul>
+                </div>
             </div>
