@@ -149,7 +149,19 @@ class Bootstrap extends CI_Controller
         $this->load->view('bootstrap/footer');
     }
 
-    function county_search_ajax(){
+    public function county_details($code = null)
+    {
+        $this->data['row'] = $this->bootstrap_model->getCountyDetails($code);
+        $this->data['cities'] = $this->bootstrap_model->getCountyCities($code);
+        $this->data['languages'] = $this->bootstrap_model->getCountyLanguages($code);
+        $this->load->view('bootstrap/header');
+        $this->load->view('bootstrap/left-menu');
+        $this->load->view('bootstrap/country_details', $this->data);
+        $this->load->view('bootstrap/footer');
+    }
+
+    public function county_search_ajax()
+    {
         echo json_encode($this->bootstrap_model->searchCounty($this->input->get('term')));
     }
 }
