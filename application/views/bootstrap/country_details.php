@@ -1,7 +1,7 @@
 <div class="col-sm-10">
     <nav aria-label="breadcrumb">
         <ol class="breadcrumb">
-            <li class="breadcrumb-item"><a href="<?= base_url('bootstrap/country') ?>">Countries</a></li>
+            <li class="breadcrumb-item"><a href="<?= base_url('bootstrap/country') ?>">Country</a></li>
             <li class="breadcrumb-item active" aria-current="page">Country Details</li>
         </ol>
     </nav>
