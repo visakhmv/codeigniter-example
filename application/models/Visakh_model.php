@@ -10,9 +10,6 @@ class Visakh_model extends CI_Model
             $this->db->or_like('phone',$search);
         }
         $query = $this->db->get('my_table');
-        /* Same as
-        $query = $this->db->query('SELECT * FROM test');
-         */
         // Returns the results as an array
         return $query->result_array();
     }

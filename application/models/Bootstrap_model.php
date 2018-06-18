@@ -8,7 +8,7 @@ class Bootstrap_model extends CI_Model
         }
         $this->db->select('code,name,continent,region,population');
         /* Same as
-        $query = $this->db->query('SELECT * FROM test');
+        $query = $this->db->query("SELECT code,name,continent,region,population FROM test where name like '%$search%'");
          */
         // Returns the results as an array
         if ($count) {
