@@ -4,7 +4,7 @@
             <a class="navbar-brand" href="#">Bootstrap</a>
         </nav>
         <div class="row">
-            <div class="col-sm-2">
+            <div class="col-md-2">
                 <div class="list-group list-group-flush">
                     <a href="<?= base_url('bootstrap/register') ?>" class="list-group-item list-group-item-action">
                         Register
