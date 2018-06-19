@@ -1,25 +1,25 @@
 <?php
 class Visakh_model extends CI_Model
 {
-    function getAllRows($search)
+    public function getAllRows($search)
     {
-        if($search){
-            $this->db->like('id',$search);
-            $this->db->or_like('name',$search);
-            $this->db->or_like('email',$search);
-            $this->db->or_like('phone',$search);
+        if ($search) {
+            $this->db->like('id', $search);
+            $this->db->or_like('name', $search);
+            $this->db->or_like('email', $search);
+            $this->db->or_like('phone', $search);
         }
         $query = $this->db->get('my_table');
         // Returns the results as an array
         return $query->result_array();
     }
 
-    function insertToMyTable($data)
+    public function insertToMyTable($data)
     {
         $this->db->insert('my_table', $data);
     }
 
-    function getRowByID($id)
+    public function getRowByID($id)
     {
         $this->db->where('id', $id);
         $query = $this->db->get('my_table');
@@ -31,25 +31,39 @@ class Visakh_model extends CI_Model
         return $query->row_array();
     }
 
-    function updateMyTable($id, $row)
+    public function updateMyTable($id, $row)
     {
         $this->db->where('id', $id);
         $this->db->update('my_table', $row);
     }
 
-    function deleteFromMyTable($id)
+    public function deleteFromMyTable($id)
     {
         $this->db->where('id', $id);
         $this->db->delete('my_table');
     }
 
-    function checkLogin($user){
-        return $this->db->get_where('login',array('username'=>$user))->row_array();
+    public function checkLogin($user)
+    {
+        return $this->db->get_where('login', array('username' => $user))->row_array();
         /*
-        OR
-        $this->db->where('username', $user);
-        $query = $this->db->get('login');
-        return $query->row_array();
-        */
+    OR
+    $this->db->where('username', $user);
+    $query = $this->db->get('login');
+    return $query->row_array();
+     */
+    }
+
+    public function getAllEntryCount()
+    {
+        return $this->db->count_all_results('my_table');
+    }
+
+    public function getAllRows2($from, $limit)
+    {
+        $this->db->limit($limit, $from);
+        $query = $this->db->get('my_table');
+        // Returns the results as an array
+        return $query->result_array();
     }
 }

@@ -51,6 +51,11 @@
             </table>
         </div>
     </div>
+    <nav class="card-body">        
+        <ul class="pagination justify-content-end">
+            <?= $pagination ?>
+        </ul>
+    </nav>  
 </div>
 <link rel="stylesheet" href="<?= base_url('assets/css/jquery-ui.css') ?>">
 <script src="<?= base_url('assets/js/jquery-ui.js') ?>"></script>

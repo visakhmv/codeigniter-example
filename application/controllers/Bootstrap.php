@@ -130,7 +130,7 @@ class Bootstrap extends CI_Controller
 
         $config['base_url'] = base_url('bootstrap/country/');
         $config['total_rows'] = $this->bootstrap_model->getAllCountries($this->data['search'], true);
-        $config['per_page'] = 30;
+        $config['per_page'] = 20;
         //Bootstrap styling
         $config['num_tag_open'] = '<li class="page-item">';
         $config['num_tag_close'] = '</li>';
