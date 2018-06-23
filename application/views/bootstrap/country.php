@@ -34,7 +34,7 @@
                 </tr>
             <?php
                 foreach ($rows as $row) :
-            ?>
+                ?>
                 <tr>
                     <td><?= $row['code'] ?></td>
                     <td><?= $row['name'] ?></td>
@@ -45,7 +45,7 @@
                         <a class="btn btn-info" href="<?= base_url('bootstrap/county_details/').$row['code'] ?>">Details</a> 
                     </td>
                 </tr>
-            <?php
+                <?php
                 endforeach
             ?>
             </table>
