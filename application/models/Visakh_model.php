@@ -66,4 +66,20 @@ class Visakh_model extends CI_Model
         // Returns the results as an array
         return $query->result_array();
     }
+
+    public function addStudent($data)
+    {
+        $this->db->insert('my_table_master', $data);
+    }
+
+    public function getCourseList()
+    {
+        return $this->db->get('my_table_child')->result_array();
+    }
+
+    public function getStudentsList()
+    {
+        $this->db->join('my_table_child', 'my_table_child.course_id=my_table_master.course_id');
+        return $this->db->get('my_table_master')->result_array();
+    }
 }

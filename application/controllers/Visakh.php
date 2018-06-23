@@ -54,7 +54,7 @@ class Visakh extends CI_Controller
     public function display_pagination($page = 0)
     {
         $this->data['search'] = $this->input->get('search');
-        
+
         $config['base_url'] = base_url('visakh/display_pagination/');
         $config['total_rows'] = $this->visakh_model->getAllEntryCount();
         $config['per_page'] = 3;
@@ -142,5 +142,33 @@ class Visakh extends CI_Controller
     {
         session_destroy();
         redirect(base_url('visakh/login'));
+    }
+
+    public function register_student()
+    {
+        if (count($_POST) > 0) {
+            //id is auto increment so no need to specify
+            $row = array(
+                'student_name' => $this->input->post('name'),
+                'course_id' => $this->input->post('course'),
+            );
+            $this->visakh_model->addStudent($row);
+            //Setting message as flash data
+            $this->session->set_flashdata('msg', 'Registration Success!');
+            //Redirecting to display page
+            redirect(base_url('visakh/display_students'));
+        }
+        $this->data['courses'] = $this->visakh_model->getCourseList();
+        $this->load->view('head');
+        $this->load->view('register_student', $this->data);
+    }
+
+    public function display_students()
+    {
+        $this->data['rows'] = $this->visakh_model->getStudentsList();
+        //Displaying flash data from register() and edit()
+        echo '<h4>' . $this->session->flashdata('msg') . '</h4>';
+        $this->load->view('head');
+        $this->load->view('display_students', $this->data);
     }
 }
